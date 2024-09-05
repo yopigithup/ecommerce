@@ -1,3 +1,2 @@
 <div>
- hermela solomon
 </div>
