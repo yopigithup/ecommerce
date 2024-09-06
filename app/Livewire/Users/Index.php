@@ -14,7 +14,6 @@ class Index extends Component
     public string $search = '';
     public bool $drawer = false;
     public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
-    //falsy "", 0, -0, '', []; if(), ? ?: ?? Object,
 
     // Clear filters
     public function clear(): void
@@ -26,7 +25,15 @@ class Index extends Component
     // Delete action
     public function delete($id): void
     {
-        $this->warning("Will delete #$id", 'It is fake.', position: 'toast-bottom');
+        //not secure and not authorized for education purpose only;
+        User::find($id)->delete();
+
+        $this->toast("User deleted", "User with #$id is deleted", position: 'toast-bottom');
+    }
+
+    public function edit($userId): void
+    {
+        $this->redirectRoute('edit-user', ['userId' => $userId]);
     }
 
     // Table headers
@@ -35,22 +42,26 @@ class Index extends Component
         return [
             ['key' => 'id', 'label' => '#', 'class' => 'w-1'],
             ['key' => 'name', 'label' => 'Name', 'class' => 'w-64'],
-            ['key' => 'age', 'label' => 'Age', 'class' => 'w-20'],
             ['key' => 'email', 'label' => 'E-mail', 'sortable' => false],
         ];
     }
 
     public function users(): Collection
     {
-        return collect([
-            ['id' => 1, 'name' => 'Mary', 'email' => 'mary@mary-ui.com', 'age' => 23],
-            ['id' => 2, 'name' => 'Giovanna', 'email' => 'giovanna@mary-ui.com', 'age' => 7],
-            ['id' => 3, 'name' => 'Marina', 'email' => 'marina@mary-ui.com', 'age' => 5],
-        ])
-            ->sortBy([[...array_values($this->sortBy)]])
-            ->when($this->search, function (Collection $collection) {
-                return $collection->filter(fn(array $item) => str($item['name'])->contains($this->search, true));
-            });
+        // return collect([
+        //     ['id' => 1, 'name' => 'Mary', 'email' => 'mary@mary-ui.com', 'age' => 23],
+        //     ['id' => 2, 'name' => 'Giovanna', 'email' => 'giovanna@mary-ui.com', 'age' => 7],
+        //     ['id' => 3, 'name' => 'Marina', 'email' => 'marina@mary-ui.com', 'age' => 5],
+        // ])
+        //     ->sortBy([[...array_values($this->sortBy)]])
+        //     ->when($this->search, function (Collection $collection) {
+        //         return $collection->filter(fn(array $item) => str($item['name'])->contains($this->search, true));
+        //     });
+
+        return User::query()->when($this->search, function ($query) {
+            return $query->where('name', 'like', "%{$this->search}%")
+                ->orWhere('email', 'like', "%{$this->search}%");
+        })->get(['id', 'name', 'email']);
     }
 
     public function render()

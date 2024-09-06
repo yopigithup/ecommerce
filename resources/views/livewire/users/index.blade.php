@@ -1,7 +1,6 @@
-
 <div>
     <!-- HEADER -->
-    <x-header title="Hello" separator progress-indicator>
+    <x-header title="User lists" separator progress-indicator>
         <x-slot:middle class="!justify-end">
             <x-input placeholder="Search..." wire:model.live.debounce="search" clearable icon="o-magnifying-glass" />
         </x-slot:middle>
@@ -14,14 +13,21 @@
     <x-card>
         <x-table :headers="$headers" :rows="$users" :sort-by="$sortBy">
             @scope('actions', $user)
-            <x-button icon="o-trash" wire:click="delete({{ $user['id'] }})" wire:confirm="Are you sure?" spinner class="btn-ghost btn-sm text-red-500" />
+                <div class="flex gap-3">
+                    <x-button label="Edit" wire:navigate wire:click="edit({{ $user['id'] }})"
+                        class="btn btn-outline btn-sm" />
+
+                    <x-button icon="o-trash" wire:navigate wire:click="delete({{ $user['id'] }})"
+                        wire:confirm="Are you sure?" spinner class="btn-ghost btn-sm text-red-500" />
+                </div>
             @endscope
         </x-table>
     </x-card>
 
     <!-- FILTER DRAWER -->
     <x-drawer wire:model="drawer" title="Filters" right separator with-close-button class="lg:w-1/3">
-        <x-input placeholder="Search..." wire:model.live.debounce="search" icon="o-magnifying-glass" @keydown.enter="$wire.drawer = false" />
+        <x-input placeholder="Search..." wire:model.live.debounce="search" icon="o-magnifying-glass"
+            @keydown.enter="$wire.drawer = false" />
 
         <x-slot:actions>
             <x-button label="Reset" icon="o-x-mark" wire:click="clear" spinner />
