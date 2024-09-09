@@ -5,30 +5,38 @@ namespace App\Livewire\Users;
 use App\Livewire\Forms\UserForm;
 use App\Models\User;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Mary\Traits\Toast;
 
 class EditUser extends Component
 {
     use Toast;
+
     public ?User $user;
     public string $name;
+
     public string $email;
+    public string $phone = "";
 
     public function rules(): array
     {
         return [
             'name' => 'required|max:190',
-            'email' => ['required', 'email'], //unique
+            'email' => ['required', 'email', Rule::unique('users')->ignore($this->user)],
+            'phone' => ['required', Rule::unique('users', 'phone')->ignore($this->user)],
         ];
     }
 
-    public function mount(string $userId)
+    public function mount(User $user)
     {
-        $this->user = User::find($userId);
+        // $this->user = User::find($userId);
+        $this->user = $user;
         $this->name = $this->user->name;
         $this->email = $this->user->email;
+        $this->phone = $this->user->phone ?? "";
     }
+
     public function editUser()
     {
         $data = $this->validate();

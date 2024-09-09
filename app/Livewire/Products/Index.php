@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Users;
+namespace App\Livewire\Products;
 
 use App\Models\User;
 use Illuminate\Support\Collection;
@@ -9,39 +9,13 @@ use Livewire\Component;
 
 class Index extends Component
 {
+
     use Toast;
 
     public string $search = '';
     public bool $drawer = false;
     public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
 
-    // Clear filters
-    public function clear(): void
-    {
-        $this->reset();
-        $this->success('Filters cleared.', position: 'toast-bottom');
-    }
-
-    // Delete action
-    public function delete($id): void
-    {
-        //not secure and not authorized for education purpose only;
-        User::find($id)->delete();
-
-        $this->toast("User deleted", "User with #$id is deleted", position: 'toast-bottom');
-    }
-
-    public function create()
-    {
-        $this->redirectRoute("users.store");
-    }
-
-    public function edit($user): void
-    {
-        $this->redirectRoute('users.update', ['user' => $user]);
-    }
-
-    // Table headers
     public function headers(): array
     {
         return [
@@ -52,7 +26,7 @@ class Index extends Component
         ];
     }
 
-    public function users(): Collection
+    public function products(): Collection
     {
         // return collect([
         //     ['id' => 1, 'name' => 'Mary', 'email' => 'mary@mary-ui.com', 'age' => 23],
@@ -75,9 +49,9 @@ class Index extends Component
     public function render()
     {
         return view(
-            'livewire.users.index',
+            'livewire.products.index',
             [
-                'users' => $this->users(),
+                'users' => $this->products(),
                 'headers' => $this->headers()
             ]
         );

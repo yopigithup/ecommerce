@@ -3,7 +3,8 @@
 use App\Livewire\Home;
 use App\Livewire\Users\CreateUser;
 use App\Livewire\Users\EditUser;
-use App\Livewire\Users\Index;
+use App\Livewire\Users;
+use App\Livewire\Products;
 use Illuminate\Support\Facades\Route;
 
 // TALL
@@ -16,8 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', Home::class)->name('home');
 
-Route::get('/users', Index::class)->name('users.index');
+Route::get('/users', Users\Index::class)->name('users.index');
+Route::get('/products', Products\Index::class)->name('products.index');
 
-Route::get('/create-user', CreateUser::class)->name('create-user');
+Route::get('/create-user', CreateUser::class)->name('users.store');
 
-Route::get('/edit-user/{userId}', EditUser::class)->name('edit-user');
+Route::get('/edit-user/{user}', EditUser::class)->name('users.update'); // route model binding

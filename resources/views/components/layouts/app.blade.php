@@ -50,7 +50,8 @@
                     <x-menu-separator />
                 @endif
 
-                <x-menu-item title="Users" icon="o-user-group" link="/users" />
+                <x-menu-item title="Users" icon="o-user-group" link="/users" wire:navigate />
+                <x-menu-item title="Products" icon="o-list-bullet" link="/products" wire:navigate />
                 <x-menu-sub title="Settings" icon="o-cog-6-tooth">
                     <x-menu-item title="Wifi" icon="o-wifi" link="####" />
                     <x-menu-item title="Archives" icon="o-archive-box" link="####" />
