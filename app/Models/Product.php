@@ -17,7 +17,7 @@ class Product extends Model
     //     'name',
     // ];
 
-    protected $guarded = [];
+    protected $guarded = []; // mass assignment vulnerability on very risky
 
     // product belongs to category
     public function category()
