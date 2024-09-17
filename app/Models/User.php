@@ -24,6 +24,8 @@ class User extends Authenticatable
         'email_verified_at',
     ];
 
+    // protected $guarded = ['id', 'is_admin'];
+
     protected $hidden = [
         'password',
         'remember_token',

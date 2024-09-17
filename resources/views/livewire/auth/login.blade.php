@@ -1,6 +1,6 @@
 <div class="md:w-96 mx-auto mt-20">
-    <div class="mb-10">
-        <img src="/logo.jpeg" alt="app logo">
+    <div class="mb-5">
+        <img src="/logo.jpeg" class="mx-auto" alt="app logo">
     </div>
 
     <x-form wire:submit="login">

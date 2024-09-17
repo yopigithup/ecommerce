@@ -6,6 +6,7 @@ use App\Livewire\Home;
 use App\Livewire\Users\CreateUser;
 use App\Livewire\Users\EditUser;
 use App\Livewire\Users;
+use App\Livewire\Categories;
 use App\Livewire\Products;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -43,8 +44,16 @@ Route::get('/logout', function () {
 // Protected routes
 Route::middleware('auth')->group(function () {
     Route::get('/users', Users\Index::class)->name('users.index');
+
+    //category
+    Route::get('/categories', Categories\Index::class)->name('categories.index');
+    Route::get('/create-category', action: Categories\CreateCategory::class)->name('categories.store');
+    Route::get('/edit-category/{category}', Categories\EditCategory::class)->name('categories.update');
+
+    //product
     Route::get('/products', Products\Index::class)->name('products.index');
 
+    //user
     Route::get('/create-user', CreateUser::class)->name('users.store');
     Route::get('/edit-user/{user}', EditUser::class)->name('users.update');
 });

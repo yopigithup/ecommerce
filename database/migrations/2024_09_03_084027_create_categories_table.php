@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('parent_id')->constrained('categories')->nullable();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

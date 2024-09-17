@@ -11,7 +11,21 @@ class Category extends Model
     use HasFactory;
     use SoftDeletes;
 
-    //one category can have more products
+    protected $fillable = [
+        'parent_id',
+        'name',
+        'description',
+        'status',
+    ];
+
+    public function parent()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
+    public function child()
+    {
+        return $this->belongsTo(Category::class);
+    }
 
     public function products()
     {
