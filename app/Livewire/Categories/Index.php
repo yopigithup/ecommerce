@@ -23,6 +23,7 @@ class Index extends Component
             ['key' => 'name', 'label' => 'Name', 'class' => 'w-64'],
             ['key' => 'parent.name', 'label' => 'Category', 'class' => 'w-64'],
             ['key' => 'status', 'label' => 'Status', 'class' => 'w-1'],
+            ['key' => 'created_at', 'label' => 'Created at', 'class' => 'w-1'],
         ];
     }
 
@@ -33,12 +34,11 @@ class Index extends Component
     }
 
     // Delete action
-    public function delete($id): void
+    public function delete(string $categoryId): void
     {
-        //not secure and not authorized for education purpose only;
-        Category::find($id)->delete();
+        Category::find($categoryId)->delete();
 
-        $this->toast("Category deleted", "Category with #$id is deleted", position: 'toast-bottom');
+        $this->toast("Category deleted", "Category with #$categoryId is deleted", position: 'toast-bottom');
     }
 
     public function create()
@@ -46,9 +46,9 @@ class Index extends Component
         $this->redirectRoute("categories.store");
     }
 
-    public function edit($category): void
+    public function edit(string $categoryId): void
     {
-        $this->redirectRoute('categories.update', ['category' => $category]);
+        $this->redirectRoute('categories.update', ['category' => $categoryId]);
     }
 
     public function categories(): Collection
@@ -56,12 +56,12 @@ class Index extends Component
         // null, "", "0", "false", [], stdClass, Object,....
         //when('') ,if(), empty(), isset() , is_null(), ?? ,?:.....
         //constraint => filter
-        $categories =  Category::query()->with(['parent-id'])
+        $categories =  Category::query()->with(['parent'])
             ->when($this->search, function ($query) {
                 return $query->where('name', 'like', "%{$this->search}%");
             })
             ->orderBy('created_at', 'desc')
-            ->get(); //['name', 'description', 'status', 'parent_id']
+            ->get(['id', 'name', 'description', 'status', 'parent_id', 'created_at']);
 
         return $categories;
     }

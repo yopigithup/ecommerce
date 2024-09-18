@@ -4,6 +4,7 @@ namespace App\Livewire\Categories;
 
 use App\Models\Category;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -16,8 +17,25 @@ class CreateCategory extends Component
     use Toast;
 
     public string $name;
+    public ?string $parent_id;
     public ?string $description;
-    public ?string $status;
+    public ?bool $status = false;
+
+    public Collection $categoriesSearchable;
+
+    public function mount()
+    {
+        $this->search();
+    }
+
+    public function search(string $value = '')
+    {
+        $this->categoriesSearchable = Category::query()
+            ->where('name', 'like', "%$value%")
+            ->take(15)
+            ->orderBy('name')
+            ->get();
+    }
 
 
     public function rules(): array
@@ -25,27 +43,17 @@ class CreateCategory extends Component
         return [
             'name' => 'required|max:190',
             'description' => 'required|max:6500',
+            'parent_id' => 'nullable',
             'status' => 'boolean',
         ];
     }
 
 
-    public function mount() {}
-
     public function createCategory()
     {
-        $this->validate();
-        $password = Str::password();
+        $data =  $this->validate();
 
-        Category::create(
-            [
-                'name' => $this->name,
-                'description' => $this->descrption,
-                'status' => $this->status,
-            ]
-        );
-
-        // channels (sms, email, slack, ....)
+        Category::create($data);
 
         $this->toast("Category add", "Category successfully added", position: 'toast-bottom');
 

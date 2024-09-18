@@ -15,6 +15,8 @@ class EditProduct extends Component
 
     public ?Product $product;
     public string $name;
+    public ?string $category_id = null;
+
     public string $cost_price;
     public string $sell_price;
     public ?bool $status = false;
@@ -23,7 +25,8 @@ class EditProduct extends Component
     public function rules(): array
     {
         return [
-            'name' => 'required|max:190',
+            'name' => 'required|string|max:190',
+            'category_id' => 'nullable',
             'cost_price' => 'required|numeric|min:0',
             'sell_price' => 'required|numeric|min:0',
             'status' => 'boolean',
@@ -35,6 +38,7 @@ class EditProduct extends Component
 
         $this->product = $product;
         $this->name = $this->product->name;
+        $this->category_id = $this->product->category_id;
         $this->cost_price = $this->product->cost_price;
         $this->sell_price = $this->product->sell_price;
         $this->status = $this->product->status;

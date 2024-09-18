@@ -2,8 +2,10 @@
 
     <x-form wire:submit="editCategory">
         <x-input label="Name" wire:model="name" />
-        <x-textarea label="Description" wire:model="description" placeholder="description ..." hint="Max 1000 chars"
-            rows="5" inline />
+
+        <x-choices label="Category" wire:model="parent_id" :options="$categoriesSearchable" single searchable />
+
+        <x-textarea label="Description" wire:model="description" hint="Max 1000 chars" rows="5" inline />
 
         <x-toggle label="Status" wire:model="status" />
 

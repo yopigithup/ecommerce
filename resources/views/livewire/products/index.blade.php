@@ -15,7 +15,7 @@
         <x-table :headers="$headers" :rows="$products" :sort-by="$sortBy">
             @scope('actions', $product)
                 <div class="flex gap-3">
-                    <x-button label="Edit Products" wire:navigate wire:click="edit({{ $product['id'] }})"
+                    <x-button label="Edit" wire:navigate wire:click="edit({{ $product['id'] }})"
                         class="btn btn-outline btn-sm" />
 
                     <x-button icon="o-trash" wire:navigate wire:click="delete({{ $product['id'] }})"

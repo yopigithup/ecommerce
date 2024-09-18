@@ -14,8 +14,12 @@ class Product extends Model
 
     protected $fillable = [
         'category_id',
-        // 'code',
+        'code',
         'name',
+        'cost_price',
+        'sell_price',
+        'description',
+        'status',
     ];
 
     // protected $guarded = ['id']; // mass assignment vulnerability on very risky

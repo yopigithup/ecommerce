@@ -38,7 +38,7 @@ class Index extends Component
 
     public function edit($product): void
     {
-        $this->redirectRoute('product.update', ['product' => $product]);
+        $this->redirectRoute('products.update', ['product' => $product]);
     }
 
     // Table headers
@@ -47,32 +47,24 @@ class Index extends Component
         return [
             ['key' => 'id', 'label' => '#', 'class' => 'w-1'],
             ['key' => 'name', 'label' => 'Name', 'class' => 'w-64'],
-            ['key' => 'cost_price', 'label' => 'cost_price', 'class' => 'w-64'],
-            ['key' => 'sell_price', 'label' => 'sell_price', 'class' => 'w-64'],
+            ['key' => 'category.name', 'label' => 'Category', 'class' => 'w-64'],
+            ['key' => 'cost_price', 'label' => 'Cost price', 'class' => 'w-64'],
+            ['key' => 'sell_price', 'label' => 'Sell price', 'class' => 'w-64'],
             ['key' => 'status', 'label' => 'status', 'class' => 'w-64'],
+            ['key' => 'created_at', 'label' => 'Created at', 'class' => 'w-64'],
 
         ];
     }
 
     public function products(): Collection
     {
-        // return collect([
-        //     ['id' => 1, 'name' => 'Mary', 'email' => 'mary@mary-ui.com', 'age' => 23],
-        //     ['id' => 2, 'name' => 'Giovanna', 'email' => 'giovanna@mary-ui.com', 'age' => 7],
-        //     ['id' => 3, 'name' => 'Marina', 'email' => 'marina@mary-ui.com', 'age' => 5],
-        // ])
-        //     ->sortBy([[...array_values($this->sortBy)]])
-        //     ->when($this->search, function (Collection $collection) {
-        //         return $collection->filter(fn(array $item) => str($item['name'])->contains($this->search, true));
-        //     });
-
         return Product::query()->when($this->search, function ($query) {
             return $query->where('name', 'like', "%{$this->search}%")
                 // ->orWhere('Category_id', 'like', "%{$this->search}%")
             ;
         })
             ->orderBy('created_at', 'desc')
-            ->get(['id', 'name',]); //['id', 'name', 'email']
+            ->get(['id', 'name', 'category_id', 'cost_price', 'sell_price', 'status', 'created_at']);
     }
 
     public function render()

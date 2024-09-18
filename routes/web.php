@@ -23,7 +23,7 @@ use Livewire\Volt\Volt;
  */
 
 Route::get('/', Home::class)->name('home');
-Route::get('/home', Home::class)->name('home');
+Route::get('home', Home::class)->name('home');
 
 // Users will be redirected to this route if not logged in
 // Volt::route(uri: '/login', 'login')->name('login');
@@ -34,7 +34,7 @@ Route::middleware(['guest'])->group(function () {
 });
 
 // Define the logout
-Route::get('/logout', function () {
+Route::get('logout', function () {
     auth()->logout();
     request()->session()->invalidate();
     request()->session()->regenerateToken();
@@ -45,20 +45,20 @@ Route::get('/logout', function () {
 
 // Protected routes
 Route::middleware('auth')->group(function () {
-    Route::get('/users', Users\Index::class)->name('users.index');
+    Route::get('users', Users\Index::class)->name('users.index');
 
     //category
-    Route::get('/categories', Categories\Index::class)->name('categories.index');
-    Route::get('/create-category', action: Categories\CreateCategory::class)->name('categories.store');
+    Route::get('categories', Categories\Index::class)->name('categories.index');
+    Route::get('create-category', action: Categories\CreateCategory::class)->name('categories.store');
 
-    Route::get('/edit-category/{category}', Categories\EditCategory::class)->name('categories.update');
-    Route::get('/edit-product/{product}', Products\EditProduct::class)->name('products.update');
+    Route::get('edit-category/{category}', Categories\EditCategory::class)->name('categories.update');
+    Route::get('edit-product/{product}', Products\EditProduct::class)->name('products.update');
     //product
-    Route::get('/products', Products\Index::class)->name('products.index');
-    Route::get('/create-product', CreateProduct::class)->name('products.store');
-    // Route::get('/edit-product/{product}', EditProduct::class)->name('products.update');
+    Route::get('products', Products\Index::class)->name('products.index');
+    Route::get('create-product', CreateProduct::class)->name('products.store');
+    // Route::get('edit-product/{product}', EditProduct::class)->name('products.update');
     //user
 
-    Route::get('/create-user', CreateUser::class)->name('users.store');
-    Route::get('/edit-user/{user}', EditUser::class)->name('users.update');
+    Route::get('create-user', CreateUser::class)->name('users.store');
+    Route::get('edit-user/{user}', EditUser::class)->name('users.update');
 });
