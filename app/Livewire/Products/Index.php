@@ -2,27 +2,55 @@
 
 namespace App\Livewire\Products;
 
-use App\Models\User;
+use App\Models\Product;
 use Illuminate\Support\Collection;
 use Mary\Traits\Toast;
 use Livewire\Component;
 
 class Index extends Component
 {
-
     use Toast;
 
     public string $search = '';
     public bool $drawer = false;
     public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
 
+    // Clear filters
+    public function clear(): void
+    {
+        $this->reset();
+        $this->success('Filters cleared.', position: 'toast-bottom');
+    }
+
+    // Delete action
+    public function delete($id): void
+    {
+        //not secure and not authorized for education purpose only;
+        Product::find($id)->delete();
+
+        $this->toast("Product deleted", "User with #$id is deleted", position: 'toast-bottom');
+    }
+
+    public function create()
+    {
+        $this->redirectRoute("products.store");
+    }
+
+    public function edit($product): void
+    {
+        $this->redirectRoute('product.update', ['product' => $product]);
+    }
+
+    // Table headers
     public function headers(): array
     {
         return [
             ['key' => 'id', 'label' => '#', 'class' => 'w-1'],
             ['key' => 'name', 'label' => 'Name', 'class' => 'w-64'],
-            ['key' => 'email', 'label' => 'E-mail', 'sortable' => false],
-            ['key' => 'phone', 'label' => 'Phone', 'sortable' => false],
+            ['key' => 'cost_price', 'label' => 'cost_price', 'class' => 'w-64'],
+            ['key' => 'sell_price', 'label' => 'sell_price', 'class' => 'w-64'],
+            ['key' => 'status', 'label' => 'status', 'class' => 'w-64'],
+
         ];
     }
 
@@ -38,12 +66,13 @@ class Index extends Component
         //         return $collection->filter(fn(array $item) => str($item['name'])->contains($this->search, true));
         //     });
 
-        return User::query()->when($this->search, function ($query) {
+        return Product::query()->when($this->search, function ($query) {
             return $query->where('name', 'like', "%{$this->search}%")
-                ->orWhere('email', 'like', "%{$this->search}%");
+                // ->orWhere('Category_id', 'like', "%{$this->search}%")
+            ;
         })
             ->orderBy('created_at', 'desc')
-            ->get(['id', 'name', 'email', 'phone']); //['id', 'name', 'email']
+            ->get(['id', 'name',]); //['id', 'name', 'email']
     }
 
     public function render()
@@ -51,7 +80,7 @@ class Index extends Component
         return view(
             'livewire.products.index',
             [
-                'users' => $this->products(),
+                'products' => $this->products(),
                 'headers' => $this->headers()
             ]
         );

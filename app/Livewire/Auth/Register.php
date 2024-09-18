@@ -42,7 +42,9 @@ class Register extends Component
 
         $data['avatar'] = '/empty-user.jpg';
 
+
         $user = User::create($data);
+
 
         auth()->login($user);
 

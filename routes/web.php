@@ -5,6 +5,8 @@ use App\Livewire\Auth\Register;
 use App\Livewire\Home;
 use App\Livewire\Users\CreateUser;
 use App\Livewire\Users\EditUser;
+use App\Livewire\Products\CreateProduct;
+use App\Livewire\Products\EditProduct;
 use App\Livewire\Users;
 use App\Livewire\Categories;
 use App\Livewire\Products;
@@ -48,12 +50,15 @@ Route::middleware('auth')->group(function () {
     //category
     Route::get('/categories', Categories\Index::class)->name('categories.index');
     Route::get('/create-category', action: Categories\CreateCategory::class)->name('categories.store');
-    Route::get('/edit-category/{category}', Categories\EditCategory::class)->name('categories.update');
 
+    Route::get('/edit-category/{category}', Categories\EditCategory::class)->name('categories.update');
+    Route::get('/edit-product/{product}', Products\EditProduct::class)->name('products.update');
     //product
     Route::get('/products', Products\Index::class)->name('products.index');
-
+    Route::get('/create-product', CreateProduct::class)->name('products.store');
+    // Route::get('/edit-product/{product}', EditProduct::class)->name('products.update');
     //user
+
     Route::get('/create-user', CreateUser::class)->name('users.store');
     Route::get('/edit-user/{user}', EditUser::class)->name('users.update');
 });

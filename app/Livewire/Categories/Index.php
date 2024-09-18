@@ -56,7 +56,7 @@ class Index extends Component
         // null, "", "0", "false", [], stdClass, Object,....
         //when('') ,if(), empty(), isset() , is_null(), ?? ,?:.....
         //constraint => filter
-        $categories =  Category::query()->with(['parent'])
+        $categories =  Category::query()->with(['parent-id'])
             ->when($this->search, function ($query) {
                 return $query->where('name', 'like', "%{$this->search}%");
             })

@@ -15,7 +15,6 @@ class CreateCategory extends Component
 {
     use Toast;
 
-    public ?Category $category;
     public string $name;
     public ?string $description;
     public ?string $status;
@@ -25,6 +24,8 @@ class CreateCategory extends Component
     {
         return [
             'name' => 'required|max:190',
+            'description' => 'required|max:6500',
+            'status' => 'boolean',
         ];
     }
 
@@ -39,10 +40,8 @@ class CreateCategory extends Component
         Category::create(
             [
                 'name' => $this->name,
-                'email' => $this->email,
-                'phone' => $this->phone,
-                'password' => "password",
-                'email_verified_at' => Carbon::now(),
+                'description' => $this->descrption,
+                'status' => $this->status,
             ]
         );
 
@@ -50,10 +49,10 @@ class CreateCategory extends Component
 
         $this->toast("Category add", "Category successfully added", position: 'toast-bottom');
 
-        return redirect()->to('/users');
+        return redirect()->to('/categories');
     }
     public function render()
     {
-        return view('livewire.users.create-user');
+        return view('livewire.Categories.create-category');
     }
 }

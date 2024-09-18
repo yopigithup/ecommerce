@@ -1,6 +1,6 @@
 <div>
     <!-- HEADER -->
-    <x-header title="User lists" separator progress-indicator>
+    <x-header title="Category lists" separator progress-indicator>
         <x-slot:middle class="!justify-end">
             <x-input placeholder="Search..." wire:model.live.debounce="search" clearable icon="o-magnifying-glass" />
         </x-slot:middle>
@@ -15,8 +15,6 @@
         <x-table :headers="$headers" :rows="$categories" :sort-by="$sortBy">
             @scope('actions', $category)
                 <div class="flex gap-3">
-                    <x-button label="Edit" wire:navigate wire:click="edit({{ $category['id'] }})"
-                        class="btn btn-outline btn-sm" />
 
                     <x-button icon="o-trash" wire:navigate wire:click="delete({{ $category['id'] }})"
                         wire:confirm="Are you sure?" spinner class="btn-ghost btn-sm text-red-500" />
