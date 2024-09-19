@@ -16,6 +16,7 @@ class Product extends Model
         'category_id',
         'code',
         'name',
+        'description',
         'cost_price',
         'sell_price',
         'description',
@@ -30,4 +31,14 @@ class Product extends Model
     }
 
     public function order() {}
+
+    public function scopePublished($query)
+    {
+        return $query;
+    }
+
+    public function scopeActive($query)
+    {
+        return $query;
+    }
 }

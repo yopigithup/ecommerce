@@ -10,7 +10,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 
 
-#[Layout('components.layouts.empty')]
+#[Layout('components.layouts.guest')]
 #[Title('Login')]
 class Register extends Component
 {

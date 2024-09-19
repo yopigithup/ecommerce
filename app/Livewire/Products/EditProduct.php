@@ -23,18 +23,7 @@ class EditProduct extends Component
     public string $sell_price;
     public ?bool $status = false;
 
-
-    public Collection $productsSearchable;
-
-
-    public function search(string $value = '')
-    {
-        $this->productsSearchable = Product::query()
-            ->where('name', 'like', "%$value%")
-            ->take(5)
-            ->orderBy('name')
-            ->get();
-    }
+    public Collection $categoriesSearchable;
 
     public function rules(): array
     {
@@ -43,14 +32,13 @@ class EditProduct extends Component
             'category_id' => 'nullable',
             'cost_price' => 'required|numeric|min:0',
             'sell_price' => 'required|numeric|min:0',
-            'description' => 'required|max:6500',
+            'description' => 'sometimes|max:6500',
             'status' => 'boolean',
         ];
     }
 
-    public function mount(Product $product)
+    public function mount(?Product $product)
     {
-
         $this->product = $product;
         $this->name = $this->product->name;
         $this->category_id = $this->product->category_id;
@@ -63,6 +51,15 @@ class EditProduct extends Component
     }
 
 
+    public function search(string $value = '')
+    {
+        $this->categoriesSearchable = Category::query()
+            ->where('name', 'like', "%$value%")
+            ->take(10)
+            ->orderBy('name')
+            ->get();
+    }
+
 
     public function editProduct()
     {
@@ -70,10 +67,14 @@ class EditProduct extends Component
 
         $this->product->update($data);
 
+        $this->reset(['name', 'category_id', 'cost_price', 'sell_price', 'description', 'status']);
+
         $this->toast("Product edited", "Product with #{$this->product->id} is successfully edited", position: 'toast-bottom');
 
         $this->redirectRoute('products.index');
     }
+
+
     public function render()
     {
         return view('livewire.products.edit-product');

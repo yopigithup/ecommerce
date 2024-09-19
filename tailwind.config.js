@@ -11,9 +11,9 @@ export default {
         "./vendor/robsontenorio/mary/src/View/Components/**/*.php",
     ],
 
-    // daisyui: {
-    //     themes: ["light", "dark", "cupcake"],
-    // },
+    daisyui: {
+        themes: ["light", "dark", "cupcake"],
+    },
 
     theme: {
         extend: {},

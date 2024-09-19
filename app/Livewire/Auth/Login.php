@@ -7,7 +7,7 @@ use Livewire\Attributes\Rule;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Layout('components.layouts.empty')]       // <-- Here is the `empty` layout
+#[Layout('components.layouts.guest')]       // <-- Here is the `empty` layout
 #[Title('Login')]
 class Login extends Component
 {

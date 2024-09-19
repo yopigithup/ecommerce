@@ -46,6 +46,7 @@ class Index extends Component
     {
         return [
             ['key' => 'id', 'label' => '#', 'class' => 'w-1'],
+            ['key' => 'code', 'label' => 'Code', 'class' => 'w-1'],
             ['key' => 'name', 'label' => 'Name', 'class' => 'w-64'],
             ['key' => 'category.name', 'label' => 'Category', 'class' => 'w-64'],
             ['key' => 'cost_price', 'label' => 'Cost price', 'class' => 'w-64'],
@@ -60,11 +61,11 @@ class Index extends Component
     {
         return Product::query()->when($this->search, function ($query) {
             return $query->where('name', 'like', "%{$this->search}%")
-                // ->orWhere('Category_id', 'like', "%{$this->search}%")
+                ->orWhere('code', 'like', "%{$this->search}%")
             ;
         })
             ->orderBy('created_at', 'desc')
-            ->get(['id', 'name', 'category_id', 'cost_price', 'sell_price', 'status', 'created_at']);
+            ->get(['id', 'code', 'name', 'category_id', 'cost_price', 'sell_price', 'status', 'created_at']);
     }
 
     public function render()

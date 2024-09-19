@@ -38,7 +38,7 @@ class EditCategory extends Component
         return [
             'name' => 'required|max:190',
             'parent_id' => 'nullable',
-            'description' => 'required|max:6500',
+            'description' => 'nullable|max:6500',
             'status' => 'boolean',
         ];
     }

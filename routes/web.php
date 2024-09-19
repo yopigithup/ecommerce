@@ -2,6 +2,7 @@
 
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
+use App\Livewire\Catalog;
 use App\Livewire\Home;
 use App\Livewire\Users\CreateUser;
 use App\Livewire\Users\EditUser;
@@ -10,6 +11,7 @@ use App\Livewire\Products\EditProduct;
 use App\Livewire\Users;
 use App\Livewire\Categories;
 use App\Livewire\Products;
+use App\Livewire\Products\ShowProduct;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -22,15 +24,15 @@ use Livewire\Volt\Volt;
  * Alpine JS
  */
 
-Route::get('/', Home::class)->name('home');
-Route::get('home', Home::class)->name('home');
+Route::get('/', Catalog\Index::class)->name('home');
+// Route::get('home', Home::class)->name('home');
 
 // Users will be redirected to this route if not logged in
 // Volt::route(uri: '/login', 'login')->name('login');
 
 Route::middleware(['guest'])->group(function () {
     Route::get("register", Register::class)->name('register');
-    Route::get("login", Login::class)->name(name: 'login');
+    Route::get("login", Login::class)->name('login');
 });
 
 // Define the logout
@@ -39,12 +41,14 @@ Route::get('logout', function () {
     request()->session()->invalidate();
     request()->session()->regenerateToken();
     return redirect('/');
-});
+})->name('logout');
 
 
 
 // Protected routes
 Route::middleware('auth')->group(function () {
+    Route::get('profiles', Users\Profile::class)->name('users.profile');
+
     Route::get('users', Users\Index::class)->name('users.index');
 
     //category
@@ -57,6 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::get('products', Products\Index::class)->name('products.index');
     Route::get('create-product', CreateProduct::class)->name('products.store');
     // Route::get('edit-product/{product}', EditProduct::class)->name('products.update');
+    Route::get('products/{product}', ShowProduct::class)->name('products.show');
     //user
 
     Route::get('create-user', CreateUser::class)->name('users.store');

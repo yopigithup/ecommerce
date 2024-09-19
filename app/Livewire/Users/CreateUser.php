@@ -35,6 +35,7 @@ class CreateUser extends Component
     public function createUser()
     {
         $this->validate();
+
         $password = Str::password();
 
         User::create(
