@@ -27,7 +27,7 @@ class EditCategory extends Component
     {
         $this->categoriesSearchable = Category::query()
             ->where('name', 'like', "%$value%")
-            ->take(2)
+            ->take(11)
             ->orderBy('name')
             ->get();
     }

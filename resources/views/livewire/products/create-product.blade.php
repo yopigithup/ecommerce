@@ -2,7 +2,7 @@
 
     <x-form wire:submit="createProduct">
 
-        <x-choices label="Category" wire:model="category_id" :options="$categoriesSearchable" single searchable />
+        <x-choices label="Category" wire:model="category_id" :options="$productsSearchable" single searchable />
 
 
         <x-input label=" Name" wire:model="name" />

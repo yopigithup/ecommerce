@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('cost_price');
             $table->decimal('sell_price');
             $table->boolean('status');
+            $table->text('description')->nullable();
             $table->string('url')->nullable();
             $table->timestamps();
             $table->softDeletes();

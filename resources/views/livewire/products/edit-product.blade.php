@@ -2,10 +2,11 @@
 
     <x-form wire:submit="editProduct">
         <x-input label="Name" wire:model="name" />
-        <x-input label="Cost_price" wire:model="Cost_price" />
-        <x-input label="Sell_price" wire:model="Sell_price" />
-        <x-textarea label="Description" wire:model="description" placeholder="description ..." hint="Max 1000 chars"
-            rows="5" inline />
+
+        <x-choices label="Category" wire:model="category_id" :options="$productsSearchable" single searchable />
+        <x-input label="Cost-price" wire:model="Cost Price" />
+        <x-input label="Sell price" wire:model="Sell price" />
+        <x-textarea label="Description" wire:model="description" hint="Max 1000 chars" rows="5" inline />
 
         <x-toggle label="Status" wire:model="status" />
 

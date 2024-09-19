@@ -20,7 +20,7 @@ class CreateProduct extends Component
 
     public string $name;
     public ?string $category_id = null;
-
+    public ?string $description = "";
     public string $cost_price;
     public string $sell_price;
     public ?bool $status = false;
@@ -32,12 +32,13 @@ class CreateProduct extends Component
             'category_id' => 'nullable',
             'cost_price' => 'required|numeric|min:0',
             'sell_price' => 'required|numeric|min:0',
+            'description' => 'required|max:6500',
             'status' => 'boolean',
         ];
     }
 
 
-    public Collection $categoriesSearchable;
+    public Collection $productsSearchable;
 
     public function mount()
     {
@@ -46,20 +47,15 @@ class CreateProduct extends Component
 
     public function search(string $value = '')
     {
-        $this->categoriesSearchable = Category::query()
+        $this->productsSearchable = Product::query()
             ->where('name', 'like', "%$value%")
             ->take(10)
             ->orderBy('name')
             ->get();
     }
-
-
-
-
     public function createProduct()
     {
         $data = $this->validate();
-
         $data['code'] = random_int(99999, 100000);
 
         Product::create($data);
