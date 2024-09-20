@@ -31,6 +31,7 @@ class Index extends Component
     public int $page = 1;
     public int $perPage = 5;
 
+
     public bool $loading = false;
 
     public function mount($categoryId = null): void
