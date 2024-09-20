@@ -7,7 +7,17 @@ use Livewire\Component;
 class ShowProduct  extends Component
 {
 
-    // public function mount(){}
+    public $product;
 
-    // public function render(){}
+    public function mount($product)
+    {
+        // dd($product);
+    }
+
+    public function render()
+    {
+        return view('livewire.products.show-product', [
+            "product" => $this->product
+        ]);
+    }
 }

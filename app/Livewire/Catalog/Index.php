@@ -97,4 +97,9 @@ class Index extends Component
             ->orderBy('name')
             ->get();
     }
+
+    public function show($product)
+    {
+        $this->redirectRoute('product.show', ['product' => $product]);
+    }
 }

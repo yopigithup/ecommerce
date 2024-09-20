@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->decimal('cost_price');
             $table->decimal('sell_price');
+            $table->decimal('qty');
+            $table->decimal('threshold_qty')->default(2);
             $table->boolean('status');
             $table->text('description')->nullable();
             $table->string('url')->nullable();

@@ -19,11 +19,11 @@ class Product extends Model
         'description',
         'cost_price',
         'sell_price',
+        'qty',
+        'threshold_qty',
         'description',
         'status',
     ];
-
-    // protected $guarded = ['id']; // mass assignment vulnerability on very risky
 
     public function category(): BelongsTo
     {
@@ -40,5 +40,10 @@ class Product extends Model
     public function scopeActive($query)
     {
         return $query;
+    }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
     }
 }

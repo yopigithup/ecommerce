@@ -50,39 +50,11 @@
                     <x-icon name="o-heart" class="cursor-pointer" />
                 </x-slot:menu>
                 <x-slot:actions>
-                    <x-button label="Show" class="btn-primary" />
+                    <x-button label="Show" wire:click="show({{ $product->id }})" class="btn-primary" />
                 </x-slot:actions>
             </x-card>
         @endforeach
 
-        <x-card title="Apple - 10 Birr">
-            Fresh and crunchy apples.
-            <x-slot:figure>
-                <img src="https://images.pexels.com/photos/70746/strawberries-red-fruit-royalty-free-70746.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Apple" />
-
-            </x-slot:figure>
-            <x-slot:menu>
-                <x-icon name="o-heart" class="cursor-pointer" />
-            </x-slot:menu>
-            <x-slot:actions>
-                <x-button label="Show" class="btn-primary" />
-            </x-slot:actions>
-        </x-card>
-
-        <x-card title="Carrot - 5 Birr">
-            Healthy and fresh carrots.
-            <x-slot:figure>
-                <img src="https://images.pexels.com/photos/1630588/pexels-photo-1630588.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Carrot" />
-            </x-slot:figure>
-            <x-slot:menu>
-                <x-icon name="o-heart" class="cursor-pointer" />
-            </x-slot:menu>
-            <x-slot:actions>
-                <x-button label="Show" class="btn-primary" />
-            </x-slot:actions>
-        </x-card>
     </div>
 
     <div x-intersect="$wire.loadMore()" />
