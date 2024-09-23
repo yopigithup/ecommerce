@@ -13,10 +13,10 @@ class Login extends Component
 {
 
     #[Rule('required|email')]
-    public string $email = '';
+    public string $email = 'test@example.com';
 
     #[Rule('required')]
-    public string $password = '';
+    public string $password = 'password';
 
     public function mount()
     {

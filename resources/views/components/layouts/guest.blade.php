@@ -58,9 +58,16 @@
                 Search <kbd class="kbd kbd-xs">⊞ win + /</kbd>
             </x-button> --}}
 
-            <x-button label="" icon="o-bell" link="###" class="btn normal-case btn-ghost btn-sm" responsive>
-                {{--
-                <x-badge value="3" class="badge-primary font-mono" /> --}}
+            {{-- <x-button label="" icon="o-bell" link="###" class="btn normal-case btn-ghost btn-sm" responsive> --}}
+            @php
+
+                $carts = App\Models\Cart::where('customer_id', auth()?->id())?->count() ?: '';
+
+            @endphp
+
+            <x-button label="" icon="o-shopping-cart" link="###" class="btn normal-case btn-ghost btn-sm"
+                responsive>
+                <x-badge value="{{ $carts }}" class="badge-primary font-mono" />
             </x-button>
 
             <x-theme-toggle class="btn btn-circle" />

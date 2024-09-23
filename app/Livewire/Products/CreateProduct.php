@@ -10,12 +10,15 @@ use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Livewire\WithFileUploads;
 use Mary\Traits\Toast;
 
 class CreateProduct extends Component
 {
     use Toast;
+    use WithFileUploads;
 
     public string $name;
     public ?string $category_id = null;
@@ -25,6 +28,8 @@ class CreateProduct extends Component
     public ?bool $status = false;
 
     public Collection $categoriesSearchable;
+
+    public $product;
 
     public function mount()
     {
@@ -58,7 +63,14 @@ class CreateProduct extends Component
 
         $data['code'] = random_int(100000, 999999);
 
-        Product::create($data);
+        $product = Product::create($data);
+
+        // if ($this->product) {
+        //     $url = $this->product->store('products', 'public');
+        //     $product->update([
+        //         'url' => Storage::disk('public')->url($url),
+        //     ]);
+        // }
 
         $this->reset(['name', 'category_id', 'cost_price', 'sell_price', 'description', 'status']);
 

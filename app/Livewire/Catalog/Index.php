@@ -4,9 +4,11 @@ namespace App\Livewire\Catalog;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\WhishList;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
@@ -39,6 +41,21 @@ class Index extends Component
         //        if ($categoryId) {
         //            $this->categories_id[] = $categoryId;
         //        }
+    }
+
+    public function whishList($product)
+    {
+        if (!Auth::check()) {
+            return $this->redirectRoute('login');
+        }
+
+        WhishList::firstORCreate(
+            ['user_id' => auth()->id(), 'product_id' => $product],
+            ['user_id' => auth()->id(), 'product_id' => $product],
+        );
+
+
+        $this->toast("Whish list updated.", "Whish list updated.", position: 'toast-bottom');
     }
 
     public function clearFilters(): void

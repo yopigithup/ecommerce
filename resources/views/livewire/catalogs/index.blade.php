@@ -47,7 +47,7 @@
                     <img src="https://picsum.photos/500/200" />
                 </x-slot:figure>
                 <x-slot:menu>
-                    <x-icon name="o-heart" class="cursor-pointer" />
+                    <x-icon name="o-heart" wire:click="whishList({{ $product->id }})" class="cursor-pointer" />
                 </x-slot:menu>
                 <x-slot:actions>
                     <x-button label="Show" wire:click="show({{ $product->id }})" class="btn-primary" />
