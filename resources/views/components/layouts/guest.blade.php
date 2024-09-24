@@ -53,24 +53,20 @@
 
         {{-- Right side actions --}}
         <x-slot:actions>
-            {{-- <x-button @click.stop="$dispatch('mary-search-open')" icon="o-magnifying-glass"
-                class="btn-ghost rounded-2xl btn-sm bg-base-200/70">
-                Search <kbd class="kbd kbd-xs">⊞ win + /</kbd>
-            </x-button> --}}
-
-            {{-- <x-button label="" icon="o-bell" link="###" class="btn normal-case btn-ghost btn-sm" responsive> --}}
             @php
-
-                $carts = App\Models\Cart::where('customer_id', auth()?->id())?->count() ?: '';
-
+                $carts = App\Models\Cart::where('customer_id', auth()?->id())?->count() ?: 0;
             @endphp
+
 
             <x-button label="" icon="o-shopping-cart" link="###" class="btn normal-case btn-ghost btn-sm"
                 responsive>
-                <x-badge value="{{ $carts }}" class="badge-primary font-mono" />
+                @if ($carts)
+                    <x-badge value="{{ $carts }}" class="badge-primary font-mono" />
+                @endif
             </x-button>
 
             <x-theme-toggle class="btn btn-circle" />
+
             @auth
                 <x-dropdown right>
                     <x-slot:trigger>

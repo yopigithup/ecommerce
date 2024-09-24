@@ -17,15 +17,19 @@ class Show  extends Component
 
     use Toast;
 
-
     public ?Product $product;
+    public ?bool $isProductExistInCart = false;
 
     public function mount(?Product $product)
     {
         $this->product = $product;
+
+        // Cart::find(); searching user id
+
+        $this->isProductExistInCart = Cart::where(['customer_id' => auth()->id(), 'product_id' => $product->id])->first() ? true : false;
     }
 
-    public function toggleCartItem($product)
+    public function addToCartItem($product)
     {
         if (!Auth::check()) {
             return $this->redirectRoute('login');
@@ -47,6 +51,19 @@ class Show  extends Component
 
         $this->toast("Cart updated.", "Cart updated.", position: 'toast-bottom');
     }
+
+    public function removeToCartItem($product)
+    {
+        if (!Auth::check()) {
+            return $this->redirectRoute('login');
+        }
+
+        Cart::where(['customer_id' => auth()->id(), 'product_id' => $product])->first()->delete();
+
+
+        $this->toast("Cart deleted.", "Cart deleted.", position: 'toast-bottom');
+    }
+
 
     public function toggleLike($product)
     {

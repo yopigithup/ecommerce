@@ -13,6 +13,10 @@
 
         <x-textarea label="Description" wire:model="description" hint="Max 1000 chars" rows="5" inline />
 
+        <x-file wire:model="image" accept="image/png, image/jpeg">
+            <img src="{{ $image ? 'storage/' . $image : '/images/product.jpeg' }}" class="h-40 rounded-lg" />
+        </x-file>
+
         <x-toggle label="Status" wire:model="status" />
 
         <x-slot:actions>

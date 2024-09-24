@@ -44,7 +44,7 @@
             <x-card title="{{ $product->sell_price }} Birr">
                 {{ $product->name }}
                 <x-slot:figure>
-                    <img src="https://picsum.photos/500/200" />
+                    <img src="{{ asset($product->url) }}" />
                 </x-slot:figure>
                 <x-slot:menu>
                     <x-icon name="o-heart" wire:click="whishList({{ $product->id }})" class="cursor-pointer" />

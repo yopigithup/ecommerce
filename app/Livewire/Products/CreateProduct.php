@@ -29,7 +29,7 @@ class CreateProduct extends Component
 
     public Collection $categoriesSearchable;
 
-    public $product;
+    public $image;
 
     public function mount()
     {
@@ -45,6 +45,7 @@ class CreateProduct extends Component
             'sell_price' => 'required|numeric|min:0',
             'description' => 'sometimes|max:6500',
             'status' => 'boolean',
+            'image' => 'image|max:2024|mimes:jpeg,png,gif,webp'
         ];
     }
 
@@ -59,18 +60,21 @@ class CreateProduct extends Component
 
     public function createProduct()
     {
-        $data = $this->validate();
+        $this->validate();
 
-        $data['code'] = random_int(100000, 999999);
+        $data = $this->except(['image', 'categoriesSearchable']);
+
+        $data['code'] = random_int(100000, 999999); // reference number
 
         $product = Product::create($data);
 
-        // if ($this->product) {
-        //     $url = $this->product->store('products', 'public');
-        //     $product->update([
-        //         'url' => Storage::disk('public')->url($url),
-        //     ]);
-        // }
+        if ($this->image) {
+            $url = $this->image->store('products', 'public');
+
+            $product->update([
+                'url' => 'storage/' . $url,
+            ]);
+        }
 
         $this->reset(['name', 'category_id', 'cost_price', 'sell_price', 'description', 'status']);
 

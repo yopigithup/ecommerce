@@ -10,10 +10,12 @@ use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Mary\Traits\Toast;
 use Illuminate\Database\Eloquent\Collection;
+use Livewire\WithFileUploads;
 
 class EditProduct extends Component
 {
     use Toast;
+    use WithFileUploads;
 
     public ?Product $product;
     public string $name;
@@ -21,9 +23,12 @@ class EditProduct extends Component
     public ?string $description = "";
     public string $cost_price;
     public string $sell_price;
+    public ?string $code = "";
     public ?bool $status = false;
 
     public Collection $categoriesSearchable;
+
+    public $image;
 
     public function rules(): array
     {
@@ -34,6 +39,7 @@ class EditProduct extends Component
             'sell_price' => 'required|numeric|min:0',
             'description' => 'sometimes|max:6500',
             'status' => 'boolean',
+            'image' => Rule::when(stripos($this->image, 'products') === false, 'image|max:2024|mimes:jpeg,png,gif,webp'),
         ];
     }
 
@@ -45,7 +51,10 @@ class EditProduct extends Component
         $this->cost_price = $this->product->cost_price;
         $this->sell_price = $this->product->sell_price;
         $this->description = $this->product->description;
+        $this->code = $this->product->code;
         $this->status = $this->product->status;
+
+        $this->image = $this->product->url ?: url('storage/products/product.jpeg');
 
         $this->search();
     }
@@ -63,9 +72,20 @@ class EditProduct extends Component
 
     public function editProduct()
     {
-        $data = $this->validate();
+        $this->validate();
+
+        $data = $this->only(['category_id', 'name', 'description', 'sell_price', 'cost_price', 'status']);
 
         $this->product->update($data);
+
+        if ($this->image && stripos($this->image, 'products') === false) {
+
+            $url = $this->image->store('products', 'public');
+
+            $this->product->update([
+                'url' => 'storage/' . $url,
+            ]);
+        }
 
         $this->reset(['name', 'category_id', 'cost_price', 'sell_price', 'description', 'status']);
 

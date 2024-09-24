@@ -22,6 +22,7 @@ class Product extends Model
         'qty',
         'threshold_qty',
         'description',
+        'url',
         'status',
     ];
 
