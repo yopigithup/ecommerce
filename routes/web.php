@@ -8,10 +8,9 @@ use App\Livewire\Products;
 use App\Livewire\Categories;
 use App\Livewire\Customer;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\OrderController;
-use App\Livewire\ProductDetail;
 use App\Livewire\Admin\Dashboard;
-
+use App\Models\Cart;
+use App\Models\Category;
 
 /**
  * Laravel v10
@@ -23,8 +22,27 @@ use App\Livewire\Admin\Dashboard;
 
 
 // Public Routes
-Route::get('/', Catalog\Index::class)->name('home');
-Route::get('/product/{id}', ProductDetail::class)->name('product.detail');
+Route::get('/', Catalog\Index::class)->name('home'); //list of products
+Route::get('/product/{product}', Catalog\show::class)->name('product.show'); // product details
+
+Route::get('carts/{cart}', function (Cart $cart) {
+    $cart->delete();
+    return redirect('/');
+})->name('cart.item.delete');
+
+
+Route::get('cart-item-delete', function () {
+    Cart::where('customer_id', auth()->id())->delete();
+    return redirect('/');
+})->name('cart.item.deletes');
+
+Route::get('cart-item-lists', function () {
+    dd('correct path');
+    // your logic here
+
+
+    return redirect('/');
+})->name('cart.item.details');
 
 // Guest Routes
 Route::middleware(['guest'])->group(function () {
@@ -59,8 +77,8 @@ Route::middleware('auth')->group(function () {
     Route::get('products/{product}', Products\ShowProduct::class)->name('products.show');
 
     // Order Management
-    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-    Route::get('/orders/table', [OrderController::class, 'showOrders'])->name('orders.table');
+    // Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+    // Route::get('/orders/table', [OrderController::class, 'showOrders'])->name('orders.table');
 
     // User Management
     Route::get('create-user', Users\CreateUser::class)->name('users.store');

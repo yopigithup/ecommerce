@@ -56,16 +56,55 @@
         {{-- Right side actions --}}
         <x-slot:actions>
             @php
-                $carts = App\Models\Cart::where('customer_id', auth()?->id())?->count() ?: 0;
+                // $carts = App\Models\Cart::where('customer_id', auth()?->id())?->count() ?: 0;
+                $carts = App\Models\Cart::where('customer_id', auth()?->id())->with('product')->get();
+
             @endphp
 
+            @if ($carts->count())
+                <x-dropdown>
+                    <x-slot:trigger>
 
-            <x-button label="" icon="o-shopping-cart" link="###" class="normal-case btn btn-ghost btn-sm"
-                responsive>
-                @if ($carts)
-                    <x-badge value="{{ $carts }}" class="font-mono badge-primary" />
-                @endif
-            </x-button>
+                        <x-button label="" icon="o-shopping-cart" class="btn-ghost btn-sm" responsive>
+                            @if ($carts->count())
+                                <x-badge value="{{ $carts->count() }}" class="font-mono badge-primary" />
+                            @endif
+                        </x-button>
+
+                    </x-slot:trigger>
+
+                    @foreach ($carts as $cart)
+                        <div class="flex  flex-1 items-center justify-between gap-10">
+                            <x-avatar :image="$cart->product->url" :title="$cart->product->name" :subtitle="$cart->product->sell_price" class="!w-15 my-6" />
+
+                            <x-button label="Trash" icon="o-trash"
+                                link="{{ route('cart.item.delete', ['cart' => $cart->id]) }}"
+                                class="normal-case btn btn-ghost btn-sm" type="button">
+                            </x-button>
+                        </div>
+                    @endforeach
+
+                    <div class="flex my-5 flex-1 items-center justify-between gap-10">
+                        <span>{{ $carts->count() }} item(s)</span>
+                        <span>{{ $carts->sum(fn($cart) => $cart->product->sell_price) }} ETB</span>
+                    </div>
+
+
+                    <x-menu-separator />
+
+                    <div class="flex gap-10">
+                        <x-button label="Trash" icon="o-trash" link="{{ route('cart.item.deletes') }}"
+                            class="normal-case btn btn-ghost btn-sm" type="button">
+                        </x-button>
+
+                        <x-button label="Go to carts" icon="o-arrow-right" link="{{ route('cart.item.details') }}"
+                            class="normal-case btn btn-ghost btn-sm" type="button">
+                        </x-button>
+                    </div>
+
+                </x-dropdown>
+
+            @endif
 
             <x-theme-toggle class="btn btn-circle" />
 

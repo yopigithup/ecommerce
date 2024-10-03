@@ -40,28 +40,24 @@
             <x-card title="{{ $product->sell_price }} Birr">
                 <h3>{{ $product->name }}</h3>
                 <x-slot:figure>
-                    <img src="{{ asset($product->url) }}" alt="{{ $product->name }}" />
+                    <a wire:navigate href="{{ route('product.show', ['product' => $product->id]) }}"
+                        class="cursor-pointer ">
+                        <img src="{{ asset($product->url) }}" alt="{{ $product->name }}" />
+                    </a>
                 </x-slot:figure>
                 <x-slot:menu>
                     <x-icon name="o-heart" class="cursor-pointer" />
                 </x-slot:menu>
 
-                <form action="{{ route('orders.store') }}" method="POST" class="mt-2">
-                    @csrf
-                    <input type="hidden" name="product_id" value="{{ $product->id }}" />
-                    <input type="number" name="quantity" class="w-16 mr-2" required placeholder="Qty" />
-                    <button type="submit" class="btn-primary">Order</button>
-                </form>
                 <x-slot:menu>
                     <x-icon name="o-heart" wire:click="whishList({{ $product->id }})" class="cursor-pointer" />
                 </x-slot:menu>
+
                 <x-slot:actions>
-                    <x-button label="Show" wire:click="show({{ $product->id }})" class="btn-primary" />
+                    <x-button label="Show" wire:click="show({{ $product->id }})" class="btn btn-outline btn-sm" />
                 </x-slot:actions>
-                <x-slot:actions>
-                    <button Label="ProductDetail" wire:click="productDetail({{ $product->id }})"
-                        class="btn-primary">Product Detail</button>
-                </x-slot:actions>
+
+
             </x-card>
         @endforeach
     </div>
