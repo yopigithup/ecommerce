@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Auth;
 
+use App\Models\User;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Title;
@@ -25,7 +26,6 @@ class Login extends Component
             return redirect('/');
         }
     }
-
     public function login()
     {
         $credentials = $this->validate();
@@ -38,6 +38,9 @@ class Login extends Component
 
         $this->addError('email', 'The provided credentials do not match our records.');
     }
+
+
+
 
     public function render()
     {

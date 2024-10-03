@@ -6,20 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 </head>
 
 <body class="min-h-screen font-sans antialiased bg-base-200/50 dark:bg-base-200">
     {{-- NAVBAR mobile only --}}
+    @yield('content')
     <x-nav sticky class="md:hidden lg:hidden">
         <x-slot:brand>
             <img src="{{ asset('images/orange.png') }}" width="30" />
             <span
-                class="font-bold text-3xl m-2 bg-gradient-to-r from-amber-500 to-amber-300 bg-clip-text text-transparent">
+                class="m-2 text-3xl font-bold text-transparent bg-gradient-to-r from-amber-500 to-amber-300 bg-clip-text">
                 orange
             </span>
         </x-slot:brand>
         <x-slot:actions>
-            <label for="main-drawer" class="lg:hidden mr-3">
+            <label for="main-drawer" class="mr-3 lg:hidden">
                 <x-icon name="o-bars-3" class="cursor-pointer" />
             </label>
         </x-slot:actions>
@@ -30,19 +32,19 @@
     <x-nav mx-auto sticky full-width bg-base-100 border-gray-100 border-b top-0 z-10 class="hidden md:block lg:block">
         <x-slot:brand>
             {{-- Drawer toggle for "main-drawer" --}}
-            <label for="main-drawer" class="lg:hidden mr-3">
+            <label for="main-drawer" class="mr-3 lg:hidden">
                 <x-icon name="o-bars-3" class="cursor-pointer" />
             </label>
 
             {{-- Brand --}}
-            <div class="flex-1 flex items-center">
+            <div class="flex items-center flex-1">
 
                 <a href="/" wire:navigate="">
                     <div class="flex items-center gap-1">
                         <img src="{{ asset('images/orange.png') }}" width="30" />
                         <span
-                            class="font-bold text-3xl mr-3 bg-gradient-to-r from-amber-500 to-amber-300 bg-clip-text text-transparent">
-                            Asibeza
+                            class="mr-3 text-3xl font-bold text-transparent bg-gradient-to-r from-amber-500 to-amber-300 bg-clip-text">
+                            Assbeza
                         </span>
                     </div>
                 </a>
@@ -58,10 +60,10 @@
             @endphp
 
 
-            <x-button label="" icon="o-shopping-cart" link="###" class="btn normal-case btn-ghost btn-sm"
+            <x-button label="" icon="o-shopping-cart" link="###" class="normal-case btn btn-ghost btn-sm"
                 responsive>
                 @if ($carts)
-                    <x-badge value="{{ $carts }}" class="badge-primary font-mono" />
+                    <x-badge value="{{ $carts }}" class="font-mono badge-primary" />
                 @endif
             </x-button>
 
@@ -84,12 +86,15 @@
                 </x-dropdown>
             @else
                 <x-button label="Login" icon="o-user-circle" link="{{ route('login') }}"
-                    class="btn normal-case btn-ghost btn-sm" type="button">
+                    class="normal-case btn btn-ghost btn-sm" type="button">
                 </x-button>
             @endauth
 
         </x-slot:actions>
     </x-nav>
+
+
+
 
     {{-- The main content with `full-width` --}}
     <x-main with-nav full-width>
@@ -108,6 +113,7 @@
 
     {{-- SPOTLIGHT --}}
     <x-spotlight shortcut="meta.slash" search-text="search by title or category name ..." />
+    @yield('content')
 </body>
 
 </html>

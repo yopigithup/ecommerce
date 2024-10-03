@@ -119,4 +119,9 @@ class Index extends Component
     {
         $this->redirectRoute('product.show', ['product' => $product]);
     }
+
+    public function order($product)
+    {
+        $this->redirectRoute('product.order', ['product' => $product]);
+    }
 }

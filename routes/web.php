@@ -8,28 +8,33 @@ use App\Livewire\Products;
 use App\Livewire\Categories;
 use App\Livewire\Customer;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController;
+use App\Livewire\ProductDetail;
+use App\Livewire\Admin\Dashboard;
 
 
-// TALL
 /**
  * Laravel v10
  * Livewire v3
- * Tailwind css
+ * Tailwind CSS
  * Alpine JS
  */
 
+
+
+// Public Routes
 Route::get('/', Catalog\Index::class)->name('home');
-// Route::get('home', Home::class)->name('home');
+Route::get('/product/{id}', ProductDetail::class)->name('product.detail');
 
-// Users will be redirected to this route if not logged in
-// Volt::route(uri: '/login', 'login')->name('login');
-
+// Guest Routes
 Route::middleware(['guest'])->group(function () {
-    Route::get("register", Customer::class)->name('register');
-    Route::get("login", Login::class)->name('login');
+    Route::get('register', Customer::class)->name('register');
+    Route::get('login', Login::class)->name('login');
 });
 
-// Define the logout
+// Admin Routes
+
+// Logout Route
 Route::get('logout', function () {
     auth()->logout();
     request()->session()->invalidate();
@@ -37,26 +42,27 @@ Route::get('logout', function () {
     return redirect('/');
 })->name('logout');
 
-Route::get('product/{product}', Catalog\Show::class)->name('product.show');
-
-// Protected routes
+// Protected Routes
 Route::middleware('auth')->group(function () {
     Route::get('profiles', Users\Profile::class)->name('users.profile');
     Route::get('users', Users\Index::class)->name('users.index');
 
-    //category
+    // Category Management
     Route::get('categories', Categories\Index::class)->name('categories.index');
-    Route::get('create-category', action: Categories\CreateCategory::class)->name('categories.store');
+    Route::get('create-category', Categories\CreateCategory::class)->name('categories.store');
     Route::get('edit-category/{category}', Categories\EditCategory::class)->name('categories.update');
-    Route::get('edit-product/{product}', Products\EditProduct::class)->name('products.update');
 
-    //product
+    // Product Management
     Route::get('products', Products\Index::class)->name('products.index');
     Route::get('create-product', Products\CreateProduct::class)->name('products.store');
     Route::get('edit-product/{product}', Products\EditProduct::class)->name('products.update');
     Route::get('products/{product}', Products\ShowProduct::class)->name('products.show');
 
-    //user
+    // Order Management
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+    Route::get('/orders/table', [OrderController::class, 'showOrders'])->name('orders.table');
+
+    // User Management
     Route::get('create-user', Users\CreateUser::class)->name('users.store');
     Route::get('edit-user/{user}', Users\EditUser::class)->name('users.update');
 });

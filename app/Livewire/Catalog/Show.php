@@ -67,7 +67,7 @@ class Show  extends Component
 
     public function toggleLike($product)
     {
-        dd($product . 'like');
+        ($product . 'like');
     }
 
     public function render()

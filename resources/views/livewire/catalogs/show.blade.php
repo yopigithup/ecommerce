@@ -1,15 +1,15 @@
-<div class="mx-auto grid grid-cols-2 gap-10">
+<div class="grid grid-cols-2 gap-10 mx-auto">
     <div>
-        <img src="{{ asset($product->url) }}" width="500" class="rounded-lg mx-auto shadow-sm">
+        <img src="{{ asset($product->url) }}" width="500" class="mx-auto rounded-lg shadow-sm">
     </div>
 
     <div>
 
-        <div class="font-bold text-2xl">
+        <div class="text-2xl font-bold">
             {{ $product->name }}
         </div>
 
-        <div class="mt-5 flex flex-wrap gap-3">
+        <div class="flex flex-wrap gap-3 mt-5">
             <div class="badge badge-neutral">
                 ETB {{ $product->sell_price }}
             </div>
@@ -19,12 +19,12 @@
 
             @if (!$isProductExistInCart)
                 <button wire:key="{{ $product->id }}" wire:click="addToCartItem({{ $product->id }})"
-                    class="btn normal-case btn-primary" type="button" wire:target="addToCartItem({{ $product->id }})"
+                    class="normal-case btn btn-primary" type="button" wire:target="addToCartItem({{ $product->id }})"
                     wire:loading.attr="disabled">
 
 
                     <span wire:loading="" wire:target="addToCartItem({{ $product->id }})"
-                        class="loading loading-spinner w-5 h-5"></span>
+                        class="w-5 h-5 loading loading-spinner"></span>
 
 
                     <!-- ICON -->
@@ -44,12 +44,12 @@
                 </button>
             @else
                 <button wire:key="{{ $product->id }}" wire:click="removeToCartItem({{ $product->id }})"
-                    class="btn normal-case " type="button" wire:target="removeToCartItem({{ $product->id }})"
+                    class="normal-case btn " type="button" wire:target="removeToCartItem({{ $product->id }})"
                     wire:loading.attr="disabled">
 
 
                     <span wire:loading="" wire:target="removeToCartItem({{ $product->id }})"
-                        class="loading loading-spinner w-5 h-5"></span>
+                        class="w-5 h-5 loading loading-spinner"></span>
 
 
                     <!-- ICON -->

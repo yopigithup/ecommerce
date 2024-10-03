@@ -16,6 +16,13 @@ class User extends Authenticatable
     use SoftDeletes;
 
 
+    const ROLE_ADMIN = 'admin';
+    const ROLE_USER = 'user';
+
+
+
+
+
     protected $fillable = [
         'name',
         'email',
@@ -25,6 +32,8 @@ class User extends Authenticatable
         'bio',
         'password',
         'email_verified_at',
+        'is_admin',
+        'role',
     ];
 
     // protected $guarded = ['id', 'is_admin'];

@@ -45,7 +45,7 @@ class CreateProduct extends Component
             'sell_price' => 'required|numeric|min:0',
             'description' => 'sometimes|max:6500',
             'status' => 'boolean',
-            'image' => 'image|max:2024|mimes:jpeg,png,gif,webp'
+            'image' => 'image|max:1000|mimes:jpeg,png,gif,webp'
         ];
     }
 
