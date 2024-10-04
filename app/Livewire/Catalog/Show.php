@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Mary\Traits\Toast;
@@ -18,7 +19,8 @@ class Show  extends Component
     use Toast;
 
     public ?Product $product;
-    public ?bool $isProductExistInCart = false;
+
+    public bool $isProductExistInCart = false;
 
     public function mount(?Product $product)
     {
@@ -48,8 +50,17 @@ class Show  extends Component
             ],
         );
 
+        $this->isProductExistInCart = true;
+
+        $this->dispatch('cart-updated');
 
         $this->toast("Cart updated.", "Cart updated.", position: 'toast-bottom');
+    }
+
+    #[On('item-removed')]
+    public function itemRemoved()
+    {
+        $this->isProductExistInCart = false;
     }
 
     public function removeToCartItem($product)
@@ -62,6 +73,10 @@ class Show  extends Component
 
 
         $this->toast("Cart deleted.", "Cart deleted.", position: 'toast-bottom');
+
+        $this->isProductExistInCart = false;
+
+        $this->dispatch('cart-updated');
     }
 
 

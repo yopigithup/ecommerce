@@ -44,8 +44,8 @@
                 </button>
             @else
                 <button wire:key="{{ $product->id }}" wire:click="removeToCartItem({{ $product->id }})"
-                    class="normal-case btn " type="button" wire:target="removeToCartItem({{ $product->id }})"
-                    wire:loading.attr="disabled">
+                    class="normal-case btn btn-primary btn-outline btn-error" type="button"
+                    wire:target="removeToCartItem({{ $product->id }})" wire:loading.attr="disabled">
 
 
                     <span wire:loading="" wire:target="removeToCartItem({{ $product->id }})"

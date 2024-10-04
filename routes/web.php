@@ -25,24 +25,6 @@ use App\Models\Category;
 Route::get('/', Catalog\Index::class)->name('home'); //list of products
 Route::get('/product/{product}', Catalog\show::class)->name('product.show'); // product details
 
-Route::get('carts/{cart}', function (Cart $cart) {
-    $cart->delete();
-    return redirect('/');
-})->name('cart.item.delete');
-
-
-Route::get('cart-item-delete', function () {
-    Cart::where('customer_id', auth()->id())->delete();
-    return redirect('/');
-})->name('cart.item.deletes');
-
-Route::get('cart-item-lists', function () {
-    dd('correct path');
-    // your logic here
-
-
-    return redirect('/');
-})->name('cart.item.details');
 
 // Guest Routes
 Route::middleware(['guest'])->group(function () {
