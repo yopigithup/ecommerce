@@ -32,7 +32,7 @@ class CartNotification extends Component
 
     public function cartDetails()
     {
-        dd('cart details');
+        return $this->redirectRoute('cart.index');
     }
 
     public function trashCart()
