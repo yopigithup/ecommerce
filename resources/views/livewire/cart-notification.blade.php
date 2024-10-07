@@ -15,7 +15,7 @@
         </div>
     @endforeach
     @if ($carts->isNotEmpty())
-        <div class="flex my-5 items-center justify-between gap-25">
+        <div class="flex items-center justify-between my-5 gap-25">
 
             <span>{{ $carts->count() }} item(s)</span>
             <span>{{ $carts->sum(fn($cart) => $cart->product->sell_price) }} ETB</span>
@@ -24,12 +24,13 @@
 
         <x-menu-separator />
 
-        <div class="flex my-5 items-center justify-between gap-25">
+        <div class="flex items-center justify-between my-5 gap-25">
             <x-button label="Trash" icon="o-trash" wire:click="trashCart" class="btn btn-primary btn-error btn-outline"
                 type="button" />
 
-            <x-button label="Go to cart" icon="o-arrow-right" wire:click="cartDetails"
-                class="normal-case btn btn-ghost btn-sm" type="button" />
+            <x-button label="Go to cart" icon="o-arrow-right" wire:click="cart" class="normal-case btn btn-ghost btn-sm"
+                type="button" />
+
         </div>
     @endif
 </x-dropdown>

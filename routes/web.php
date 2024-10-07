@@ -9,7 +9,7 @@ use App\Livewire\Categories;
 use App\Livewire\Customer;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\Dashboard;
-use App\Models\Cart;
+use App\Livewire\Cart;
 use App\Models\Category;
 
 /**
@@ -24,6 +24,8 @@ use App\Models\Category;
 // Public Routes
 Route::get('/', Catalog\Index::class)->name('home'); //list of products
 Route::get('/product/{product}', Catalog\show::class)->name('product.show'); // product details
+
+Route::get('/cart', Cart::class)->name('cart.index');
 
 
 // Guest Routes
@@ -57,6 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::get('create-product', Products\CreateProduct::class)->name('products.store');
     Route::get('edit-product/{product}', Products\EditProduct::class)->name('products.update');
     Route::get('products/{product}', Products\ShowProduct::class)->name('products.show');
+
 
     // Order Management
     // Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');

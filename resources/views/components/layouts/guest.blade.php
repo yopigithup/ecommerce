@@ -53,6 +53,7 @@
 
         <x-slot:actions>
 
+
             <livewire:cart-notification />
 
             <x-theme-toggle class="btn btn-circle" />
