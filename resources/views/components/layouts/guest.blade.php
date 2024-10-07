@@ -82,6 +82,7 @@
         </x-slot:actions>
     </x-nav>
 
+
     {{-- The main content with `full-width` --}}
     <x-main with-nav full-width>
 

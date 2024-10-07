@@ -28,6 +28,7 @@ Route::get('/product/{product}', Catalog\show::class)->name('product.show'); // 
 Route::get('/cart', Cart::class)->name('cart.index');
 
 
+
 // Guest Routes
 Route::middleware(['guest'])->group(function () {
     Route::get('register', Customer::class)->name('register');
