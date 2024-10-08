@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('invoice_number')->unique()->index();
             $table->foreignId('customer_id');
             $table->integer('total_price');
-            $table->tinyInteger('status'); // paid, not-paid
+            $table->string('status'); // paid, not-paid
             $table->timestamps();
         });
     }

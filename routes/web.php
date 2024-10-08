@@ -10,6 +10,7 @@ use App\Livewire\Customer;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Cart;
+use App\Livewire\Checkout;
 use App\Models\Category;
 
 /**
@@ -26,6 +27,9 @@ Route::get('/', Catalog\Index::class)->name('home'); //list of products
 Route::get('/product/{product}', Catalog\show::class)->name('product.show'); // product details
 
 Route::get('/cart', Cart::class)->name('cart.index');
+
+Route::get('/checkout/{order}', Checkout::class)->name('checkout');
+
 
 
 

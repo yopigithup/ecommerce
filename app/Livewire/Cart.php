@@ -3,6 +3,9 @@
 namespace App\Livewire;
 
 use App\Models\Cart as CartModel;
+use App\Models\OrderItem;
+use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -30,21 +33,56 @@ class Cart extends Component
         }
     }
 
-    public function incrementQuantity($cartId)
+    public function incrementQuantity(CartModel $cartItem)
     {
-        $cartItem = CartModel::find($cartId);
-        $cartItem->quantity++;
-        $cartItem->save();
+        $cartItem->increment('qty');
+
         $this->getCarts(); // Refresh the cart items
     }
 
-    public function decrementQuantity($cartId)
+    public function checkout($totalAmount)
     {
-        $cartItem = CartModel::find($cartId);
-        if ($cartItem->quantity > 1) {
-            $cartItem->quantity--;
-            $cartItem->save();
+
+        DB::transaction(function () use ($totalAmount) {
+            $orderExist = Order::where('customer_id', auth()->id())->where('status', 'pending')->first();
+            if (empty($orderExist)) {
+                //create order
+                $order = new Order();
+                $order->invoice_number = random_int(100000, 999999);
+                $order->total_price = $totalAmount;
+                $order->customer_id = auth()->id();
+                $order->status = 'pending';
+                $order->save();
+            } else {
+                $orderExist->update(['total_price' => $totalAmount]);
+                $orderExist->orderItems()->delete();
+            }
+
+
+            foreach ($this->carts as $cart) {
+                //create order detail
+                OrderItem::firstOrCreate([
+                    'order_id' => $orderExist ? $orderExist->id : $order->id,
+                    'product_id' => $cart->product->id,
+                    'qty' => $cart->qty,
+                ]);
+            }
+
+            //clear cart
+            // CartModel::where('customer_id', auth()->id())->delete(); //  until he/she pay the price
+
+            return $this->redirectRoute('checkout', ['order' => $orderExist ?? $order]);
+        });
+    }
+
+    public function decrementQuantity(CartModel $cartItem)
+    {
+        $qty = (int)$cartItem->qty;
+
+        if ($qty > 1) {
+            $cartItem->decrement('qty');
         }
+
         $this->getCarts(); // Refresh the cart items
     }
 
