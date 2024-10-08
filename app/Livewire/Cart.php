@@ -7,7 +7,7 @@ use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 
-#[Layout('components.layouts.guest')]       // <-- Here is the `empty` layout
+#[Layout('components.layouts.guest')]
 #[Title('Cart')]
 class Cart extends Component
 {
@@ -23,12 +23,34 @@ class Cart extends Component
     public function getCarts()
     {
         $this->carts = CartModel::where('customer_id', auth()->id())->with('product')->get();
+
+        // Initialize quantity for each cart item
+        foreach ($this->carts as $cart) {
+            $cart->quantity = $cart->quantity ?? 1; // Default to 1 if not set
+        }
+    }
+
+    public function incrementQuantity($cartId)
+    {
+        $cartItem = CartModel::find($cartId);
+        $cartItem->quantity++;
+        $cartItem->save();
+        $this->getCarts(); // Refresh the cart items
+    }
+
+    public function decrementQuantity($cartId)
+    {
+        $cartItem = CartModel::find($cartId);
+        if ($cartItem->quantity > 1) {
+            $cartItem->quantity--;
+            $cartItem->save();
+        }
+        $this->getCarts(); // Refresh the cart items
     }
 
     public function delete(CartModel $cartId)
     {
         $cartId->delete();
-
         $this->getCarts();
     }
 
@@ -39,10 +61,12 @@ class Cart extends Component
 
     public function addToCart($name, $image, $price)
     {
+        // Logic to add to cart, assuming quantity is 1 for new items
         $product = [
             'name' => $name,
             'image' => $image,
             'price' => $price,
+            'quantity' => 1,
         ];
 
         session()->push('cart', $product);
@@ -60,21 +84,29 @@ class Cart extends Component
 
     public function trashCart()
     {
-        // Logic to clear the cart
         session()->forget('cart');
         $this->carts = [];
     }
 
-    public function cart()
+    public function calculateTotals()
     {
-        return redirect()->route('cart.index'); // Ensure this route is defined
+        $subtotal = $this->carts->sum(function ($cart) {
+            return $cart->product->sell_price * $cart->quantity;
+        });
+
+        $shipping = 4.99; // Example shipping cost
+        $total = $subtotal + $shipping;
+
+        return [
+            'subtotal' => $subtotal,
+            'total' => $total,
+        ];
     }
 
     public function render()
     {
-
-        return view(
-            'livewire.cart'
-        );
+        return view('livewire.cart', [
+            'totals' => $this->calculateTotals(),
+        ]);
     }
 }

@@ -41,7 +41,7 @@ class ProductReview extends Component
 
     public function render()
     {
-        return view('livewire.product-review', [
+        return view('livewire.produphpct-review', [
             'reviews' => $this->product->reviews,
         ]);
     }
