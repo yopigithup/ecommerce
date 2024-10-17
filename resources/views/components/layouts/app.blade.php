@@ -48,17 +48,21 @@
 
                     <x-menu-separator />
                 @endif
+                @if (auth()->user()->name === 'admin')
+                    <x-menu-item title="Users" icon="o-user-group" link="/users" wire:navigate />
+                    <x-menu-item title="Categories" icon="o-briefcase" link="/categories" wire:navigate />
+                    <x-menu-item title="Products" icon="o-list-bullet" link="/products" wire:navigate />
+                    {{-- <x-menu-item title="order table" icon="o-list-bullet" link="/products" wire:navigate /> --}}
+                    <x-menu-sub title="Settings" icon="o-cog-6-tooth">
+                        <x-menu-item title="Wifi" icon="o-wifi" link="####" />
+                        <x-menu-item title="Archives" icon="o-archive-box" link="####" />
+                    </x-menu-sub>
+                @endif
 
-                <x-menu-item title="Users" icon="o-user-group" link="/users" wire:navigate />
-                <x-menu-item title="Categories" icon="o-briefcase" link="/categories" wire:navigate />
-                <x-menu-item title="Products" icon="o-list-bullet" link="/products" wire:navigate />
-                {{-- <x-menu-item title="order table" icon="o-list-bullet" link="/products" wire:navigate /> --}}
-                <a href="{{ 'orders/table' }}" class="ml-8 text-xl text-gray-700">orders</a>
+                @if (auth()->user()->name !== 'admin')
+                    <a href="{{ 'orders/table' }}" class="ml-8 text-xl text-gray-700">orders</a>
+                @endif
 
-                <x-menu-sub title="Settings" icon="o-cog-6-tooth">
-                    <x-menu-item title="Wifi" icon="o-wifi" link="####" />
-                    <x-menu-item title="Archives" icon="o-archive-box" link="####" />
-                </x-menu-sub>
             </x-menu>
         </x-slot:sidebar>
 

@@ -15,19 +15,13 @@ class Checkout extends Component
 
     public function mount(Order $order)
     {
-        $this->order  = $order;
-    }
-
-    public function pay()
-    {
-        // your logic here
-
-        //clear cart
-        // CartModel::where('customer_id', auth()->id())->delete(); //  until he/she pay the price
+        $this->order = $order;
     }
 
     public function render()
     {
-        return view('livewire.checkout');
+        return view('livewire.checkout', [
+            'order' => $this->order,
+        ]);
     }
 }

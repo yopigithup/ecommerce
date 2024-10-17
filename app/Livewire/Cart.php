@@ -68,8 +68,8 @@ class Cart extends Component
                 ]);
             }
 
-            //clear cart
-            // CartModel::where('customer_id', auth()->id())->delete(); //  until he/she pay the price
+
+            CartModel::where('customer_id', auth()->id())->delete();
 
             return $this->redirectRoute('checkout', ['order' => $orderExist ?? $order]);
         });

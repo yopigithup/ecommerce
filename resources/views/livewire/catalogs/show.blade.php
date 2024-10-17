@@ -11,17 +11,6 @@
 
 
 
-        <!-- Rating Section -->
-        <div class="flex items-center mt-2">
-            @for ($i = 1; $i <= 5; $i++)
-                <svg class="w-5 h-5 {{ $i <= $product->rating ? 'text-yellow-500' : 'text-gray-300' }}"
-                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                        d="M10 15.27L16.18 19l-1.64-7.03L20 7.24l-7.19-.61L10 0 7.19 6.63 0 7.24l5.46 4.73L3.82 19z" />
-                </svg>
-            @endfor
-            <span class="ml-2 text-gray-600">({{ number_format($product->rating, 1) }})</span>
-        </div>
 
 
 

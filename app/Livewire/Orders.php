@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Livewire\Catalog;
+namespace App\Livewire;
 
-use App\Models\Order as ModelsOrder;
+use App\Models\Order;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
-class Order extends Component
+class Orders extends Component
 {
+
     public function orders(): Collection
     {
         // return collect([
@@ -19,8 +20,8 @@ class Order extends Component
         //     ->when($this->search, function (Collection $collection) {
         //         return $collection->filter(fn(array $item) => str($item['name'])->contains($this->search, true));
         //     });
-        $userId = auth()->user()->id;
-        return ModelsOrder::where('customer_id', $userId)->get();
+
+        return auth()->user()->orders;
     }
     public function headers(): array
     {

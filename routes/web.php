@@ -1,5 +1,7 @@
+
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\Catalog;
@@ -10,6 +12,7 @@ use App\Livewire\Customer;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Cart;
+use App\Livewire\Catalog\Order;
 use App\Livewire\Checkout;
 use App\Models\Category;
 
@@ -28,7 +31,8 @@ Route::get('/product/{product}', Catalog\show::class)->name('product.show'); // 
 
 Route::get('/cart', Cart::class)->name('cart.index');
 
-Route::get('/checkout/{order}', Checkout::class)->name('checkout');
+// Route::get('/checkout/{order}', Checkout::class)->name('checkout');
+Route::get('/checkout/{order}', [OrderController::class, 'store'])->name('checkout');
 
 
 
@@ -65,6 +69,7 @@ Route::middleware('auth')->group(function () {
     Route::get('edit-product/{product}', Products\EditProduct::class)->name('products.update');
     Route::get('products/{product}', Products\ShowProduct::class)->name('products.show');
 
+    Route::get('orders/table', Order::class)->name('orders.show');
 
     // Order Management
     // Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');

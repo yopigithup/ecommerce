@@ -12,6 +12,8 @@ use Livewire\Component;
 
 #[Layout('components.layouts.guest')]
 #[Title('Login')]
+
+
 class Customer extends Component
 {
     #[Rule('required')]

@@ -26,25 +26,21 @@
                 <x-icon name="o-bars-3" class="cursor-pointer" />
             </label>
         </x-slot:actions>
-
     </x-nav>
 
     {{-- The navbar with `sticky` and `full-width` --}}
     <x-nav mx-auto sticky full-width bg-base-100 border-gray-100 border-b top-0 z-10 class="hidden md:block lg:block">
         <x-slot:brand>
-
             <label for="main-drawer" class="mr-3 lg:hidden">
                 <x-icon name="o-bars-3" class="cursor-pointer" />
             </label>
-
-
             <div class="flex items-center flex-1">
                 <a href="/" wire:navigate="">
                     <div class="flex items-center gap-1">
                         <img src="{{ asset('images/orange.png') }}" width="30" />
                         <span
                             class="mr-3 text-3xl font-bold text-transparent bg-gradient-to-r from-amber-500 to-amber-300 bg-clip-text">
-                            Assbeza
+                            Asbeza
                         </span>
                     </div>
                 </a>
@@ -55,22 +51,34 @@
 
 
             <livewire:cart-notification />
-
             <x-theme-toggle class="btn btn-circle" />
 
             @auth
                 <x-dropdown right>
+
+
                     <x-slot:trigger>
                         <x-button label="" icon="o-user-circle" class="btn-ghost btn-sm" responsive>
                             {{ auth()->user()->name }}
                         </x-button>
-                    </x-slot:trigger>
+                        @if (auth()->user()->name === 'admin')
+                            <x-button link="{{ route('users.index') }}" label="" icon="o-squares-plus"
+                                class="btn-ghost btn-sm" responsive>
+                            </x-button>
+                        @endif
 
+                        @if (auth()->user()->name !== 'admin')
+                            <x-button link="{{ route('orders.show') }}" label="" icon="o-squares-plus"
+                                class="btn-ghost btn-sm" responsive>
+                            </x-button>
+                        @endif
+
+
+                    </x-slot:trigger>
+                    <x-menu-item title="Profile" icon="o-user" link="{{ route('users.profile') }}" />
                     <x-menu-item title="Profile" icon="o-user" link="{{ route('users.profile') }}" />
 
-
                     <x-menu-separator />
-
                     <x-menu-item title="Logout" icon="o-power" link="{{ route('logout') }}" />
                 </x-dropdown>
             @else
@@ -78,15 +86,11 @@
                     class="normal-case btn btn-ghost btn-sm" type="button">
                 </x-button>
             @endauth
-
         </x-slot:actions>
     </x-nav>
 
-
     {{-- The main content with `full-width` --}}
     <x-main with-nav full-width>
-
-        {{-- The `$slot` goes here --}}
         <x-slot:content>
             {{ $slot }}
         </x-slot:content>
@@ -100,7 +104,9 @@
 
     {{-- SPOTLIGHT --}}
     <x-spotlight shortcut="meta.slash" search-text="search by title or category name ..." />
-    @yield('content')
+
+    {{-- Include Livewire Scripts --}}
+    @livewireScripts
 </body>
 
 </html>

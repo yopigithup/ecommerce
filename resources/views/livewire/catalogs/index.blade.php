@@ -48,11 +48,11 @@
                 <x-slot:menu>
                     <x-icon name="o-heart" class="cursor-pointer" />
                 </x-slot:menu>
-
+                <!--
                 <x-slot:menu>
-                    <x-icon name="o-heart" wire:click="whishList({{ $product->id }})" class="cursor-pointer" />
+                <x-icon name="o-heart" wire:click="whishList({{ $product->id }})" class="cursor-pointer" />
                 </x-slot:menu>
-
+                -->
                 <x-slot:actions>
                     <x-button label="Show" wire:click="show({{ $product->id }})" class="btn btn-outline btn-sm" />
                 </x-slot:actions>
