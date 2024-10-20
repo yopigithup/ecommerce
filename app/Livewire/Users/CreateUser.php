@@ -19,6 +19,23 @@ class CreateUser extends Component
     #[Validate('email')]
     public string $email;
     public string $phone;
+    public string $type;
+    public string $selectedUser;
+
+    public array $types = [
+        [
+            "id" => 'admin',
+            "name" => 'Admin'
+        ],
+        [
+            "id" => 'user',
+            "name" => 'User'
+        ],
+        [
+            "id" => 'customer',
+            "name" => 'Customer'
+        ],
+    ];
 
     public function rules(): array
     {
@@ -26,6 +43,7 @@ class CreateUser extends Component
             'name' => 'required|max:190',
             'email' => ['required', 'email', Rule::unique('users')],
             'phone' => ['required', Rule::unique('users')],
+            'type' => ['required'],
         ];
     }
 
@@ -43,6 +61,7 @@ class CreateUser extends Component
                 'name' => $this->name,
                 'email' => $this->email,
                 'phone' => $this->phone,
+                'type' => $this->type,
                 'password' => "password",
                 'email_verified_at' => Carbon::now(),
             ]

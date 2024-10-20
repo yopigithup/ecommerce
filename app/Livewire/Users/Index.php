@@ -49,6 +49,7 @@ class Index extends Component
             ['key' => 'name', 'label' => 'Name', 'class' => 'w-64'],
             ['key' => 'email', 'label' => 'E-mail', 'sortable' => false],
             ['key' => 'phone', 'label' => 'Phone', 'sortable' => false],
+            ['key' => 'type', 'label' => 'Type', 'sortable' => false],
         ];
     }
 
@@ -69,7 +70,7 @@ class Index extends Component
                 ->orWhere('email', 'like', "%{$this->search}%");
         })
             ->orderBy('created_at', 'desc')
-            ->get(['id', 'name', 'email', 'phone']); //['id', 'name', 'email']
+            ->get(['id', 'name', 'email', 'phone', 'type']); //['id', 'name', 'email']
     }
 
     public function render()

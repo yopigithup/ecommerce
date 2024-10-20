@@ -4,6 +4,7 @@
         <x-input label="Full name" wire:model="name" />
         <x-input label="E-mail" wire:model.blur="email" />
         <x-input label="Phone" wire:model="phone" />
+        <x-select label="Type" :options="$types" wire:model="type" />
 
         <x-slot:actions>
             <x-button label="Add user" class="btn-primary" type="submit" spinner="createUser" />

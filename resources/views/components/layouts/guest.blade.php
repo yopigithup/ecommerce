@@ -76,8 +76,6 @@
 
                     </x-slot:trigger>
                     <x-menu-item title="Profile" icon="o-user" link="{{ route('users.profile') }}" />
-                    <x-menu-item title="Profile" icon="o-user" link="{{ route('users.profile') }}" />
-
                     <x-menu-separator />
                     <x-menu-item title="Logout" icon="o-power" link="{{ route('logout') }}" />
                 </x-dropdown>

@@ -48,7 +48,7 @@
 
                     <x-menu-separator />
                 @endif
-                @if (auth()->user()->name === 'admin')
+                @if (auth()->user()->type === 'admin')
                     <x-menu-item title="Users" icon="o-user-group" link="/users" wire:navigate />
                     <x-menu-item title="Categories" icon="o-briefcase" link="/categories" wire:navigate />
                     <x-menu-item title="Products" icon="o-list-bullet" link="/products" wire:navigate />
@@ -59,8 +59,10 @@
                     </x-menu-sub>
                 @endif
 
-                @if (auth()->user()->name !== 'admin')
-                    <a href="{{ 'orders/table' }}" class="ml-8 text-xl text-gray-700">orders</a>
+                @if (auth()->user()->type !== 'admin')
+                    <a href="{{ 'orders/table' }}" class="ml-8 text-xl text-gray-700">
+                        orders
+                    </a>
                 @endif
 
             </x-menu>

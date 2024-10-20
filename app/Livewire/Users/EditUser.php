@@ -18,6 +18,22 @@ class EditUser extends Component
 
     public string $email;
     public string $phone = "";
+    public string $type = "";
+
+    public array $types = [
+        [
+            "id" => 'admin',
+            "name" => 'Admin'
+        ],
+        [
+            "id" => 'user',
+            "name" => 'User'
+        ],
+        [
+            "id" => 'customer',
+            "name" => 'Customer'
+        ],
+    ];
 
     public function rules(): array
     {
@@ -25,6 +41,7 @@ class EditUser extends Component
             'name' => 'required|max:190',
             'email' => ['required', 'email', Rule::unique('users')->ignore($this->user)],
             'phone' => ['required', Rule::unique('users', 'phone')->ignore($this->user)],
+            'type' => ['required'],
         ];
     }
 
@@ -35,6 +52,7 @@ class EditUser extends Component
         $this->name = $this->user->name;
         $this->email = $this->user->email;
         $this->phone = $this->user->phone ?? "";
+        $this->type = $this->user->type ?? "user";
     }
 
     public function editUser()

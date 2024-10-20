@@ -39,7 +39,7 @@ Route::get('/checkout/{order}', [OrderController::class, 'store'])->name('checko
 
 // Guest Routes
 Route::middleware(['guest'])->group(function () {
-    Route::get('register', Customer::class)->name('register');
+    Route::get('register', Register::class)->name('register');
     Route::get('login', Login::class)->name('login');
 });
 
