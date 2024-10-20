@@ -55,30 +55,27 @@
 
             @auth
                 <x-dropdown right>
-
-
                     <x-slot:trigger>
                         <x-button label="" icon="o-user-circle" class="btn-ghost btn-sm" responsive>
                             {{ auth()->user()->name }}
                         </x-button>
-                        @if (auth()->user()->name === 'admin')
-                            <x-button link="{{ route('users.index') }}" label="" icon="o-squares-plus"
-                                class="btn-ghost btn-sm" responsive>
-                            </x-button>
-                        @endif
-
-                        @if (auth()->user()->name !== 'admin')
-                            <x-button link="{{ route('orders.show') }}" label="" icon="o-squares-plus"
-                                class="btn-ghost btn-sm" responsive>
-                            </x-button>
-                        @endif
-
-
                     </x-slot:trigger>
                     <x-menu-item title="Profile" icon="o-user" link="{{ route('users.profile') }}" />
                     <x-menu-separator />
                     <x-menu-item title="Logout" icon="o-power" link="{{ route('logout') }}" />
                 </x-dropdown>
+
+                @if (auth()->user()->type === 'admin')
+                    <x-button link="{{ route('users.index') }}" label="Dashboard" icon="o-squares-plus"
+                        class="btn-ghost btn-sm" responsive>
+                    </x-button>
+                @endif
+
+                @if (auth()->user()->type !== 'admin')
+                    <x-button link="{{ route('orders.show') }}" label="Dashboard" icon="o-squares-plus"
+                        class="btn-ghost btn-sm" responsive>
+                    </x-button>
+                @endif
             @else
                 <x-button label="Login" icon="o-user-circle" link="{{ route('login') }}"
                     class="normal-case btn btn-ghost btn-sm" type="button">
