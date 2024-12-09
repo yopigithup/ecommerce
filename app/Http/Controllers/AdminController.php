@@ -43,29 +43,29 @@ class AdminController extends Controller
     public function AdminProfileStore(Request  $request)
     {
         $id = Auth::user()->id;
-        $data =  User::find($id);
+        $data = User::find($id);
         $data->name = $request->name;
         $data->email = $request->email;
         $data->phone = $request->phone;
+        $data->photo = $request->photo;
         $data->address = $request->address;
 
-        if ($request->file('photo')) {
-            $file = $request->file('photo');
-            @unlink(public_path('upload/admin_images/.$data->photo'));
-            $filename = date('YmdHi') . $file->getClientOriginalName();
-            $file->move(public_path('upload/admin_images'), $filename);
-            $data['photo'] = $filename;
-        }
 
+        if ($request->file('photo')) {
+            $file = $request->file('photo'); //Retrieving the Uploaded File
+            @unlink(public_path('upload/admin_images/.$data->photo')); // Deleting the Old Photo
+            $filename = date('ymdHi') . $file->getClientOriginalName(); // Generating a Unique Filename
+            $file->move(public_path('upload/admin_images'), $filename); // Moving the File to the Desired Directory
+            $data['photo'] = $filename; //Updating the Database with the New Filename
+        }
         $data->save();
 
-        $notification = array(
-            'message' => 'Admin Profile Updated Sucessfully',
+        $notificaiton = array(
+            'message' => 'User Profile Updated Sucessfully',
             'alert-type' => 'success',
         );
-        return redirect()->back()->with($notification);
+        return redirect()->back()->with($notificaiton);
     }
-
 
     public function AdminChangePassword()
     {
