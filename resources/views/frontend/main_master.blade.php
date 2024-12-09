@@ -36,7 +36,7 @@
     <link rel="icon" type="image/png" href="assets/img/favicon.png" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
-    <title>Heri Hotel</title>
+    <title>Heri Hotel Ethiopia</title>
 </head>
 
 <body>
